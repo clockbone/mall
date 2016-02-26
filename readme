@@ -1,0 +1,15 @@
+1、启动mysql服务，以管理员身份运行cmd
+  键入：net start mysql
+
+2、 <authentication-manager>
+          <!--权限控制类，权限校验通过 给用户添加相应权限-->
+          <!--此校验拦截的是 login-page="/user/login" 请正确理解！！！-->
+          <authentication-provider user-service-ref='userDetailsService' />
+    </authentication-manager>
+
+3、 spring security对用户名和密码的校验过程
+    AuthenticationManager调用Provider，provider调用userDetaisService来根据username获取真实的数据库信息。
+    而在usernamePasswordAuthenticationFilter中来调用的是AuthenticationManager
+
+４、用户密码是如何匹配的
+   在userDetailsService　类中可获取用户名，根据用户拿到密码后，封装到Ｕｓｅｒ对象中，框架会自动匹配密码
