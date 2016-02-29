@@ -3,14 +3,16 @@ package com.clockbone.service.impl;
 import com.clockbone.domain.Item;
 import com.clockbone.domain.Order;
 import com.clockbone.domain.OrderItem;
+import com.clockbone.domain.User;
 import com.clockbone.mapper.ItemMapper;
 import com.clockbone.service.OrderService;
 import com.clockbone.vo.CartItem;
 import com.clockbone.vo.Result;
+import com.clockpone.mapper.MainMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.beans.beancontext.BeanContext;
 import java.util.*;
 
 /**
@@ -19,7 +21,11 @@ import java.util.*;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    @Autowired
     private ItemMapper itemMapper;
+
+    @Autowired(required = false)
+    private MainMapper mainMapper;
 
     private static final Object itemlock = new Object();
 
@@ -31,6 +37,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Order createOrderProcess(List<CartItem> items,String payType,String userName,String popu,Result result){
+
+        List<Item> list1 = itemMapper.findAll();
+
+        //测试多个数据源是否有效
+        //User user = mainMapper.getUserByName("admin");
 
         List<OrderItem> list = new ArrayList<OrderItem>(items.size());
         int totalCount=0;

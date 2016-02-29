@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.clockbone</groupId>
-    <artifactId>manager</artifactId>
+    <artifactId>mall</artifactId>
     <packaging>war</packaging>
     <version>1.0.0</version>
-    <name>manager</name>
+    <name>mall</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -15,7 +15,7 @@
     </properties>
 
     <build>
-        <finalName>clock-manager</finalName>
+        <finalName>clock-mall</finalName>
 
         <!-- 可以把属性写到文件里,用属性文件里定义的属性做替换 打包时，将替换src/main/resources 下的所有properties文件对应的属性 -->
         <resources>

@@ -57,10 +57,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }*/
         //md5 加密的，明文：6
         mangerUser.setPassWord("1679091c5a880faf6fb5e6087eb1b2dc");
-        //这里将 数据库的密码放到ｕｓｅｒ　中，框加会自动匹配密码
 
+        //这里将 数据库的密码放到user　中，框加会自动匹配密码
         User user = new User(username, mangerUser.getPassWord(), auths);
-       /* 通过UserDetailsServiceImpl拿到用户信息后，authenticationManager对比用户的密码（即验证用户），*/
+       /* 通过UserDetailsServiceImpl拿到用户信息后，authenticationManager 对比用户的密码（即验证用户），*/
         return user;
 
     }

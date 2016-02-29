@@ -13,16 +13,20 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<!-- 自动装配包中的类，过滤掉带有@Controller注解的类 -->
-	<context:component-scan base-package="com.clockbone">
+	<context:component-scan base-package="com.clockbone,com.clockpone">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
+
+
 
     <util:properties id="app" location="classpath:/app.properties"/>
 	
 	<!-- 配置自动扫描方法 ，并每隔多长时间执行这个方法-->
     <import resource="spring-security.xml"></import>
+    <import resource="mybatis-sec.xml"/>
     <import resource="mybatis.xml"/>
+
 	<task:annotation-driven/>
 
 

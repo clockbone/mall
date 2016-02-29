@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.clockbone.mapper.ItemMapper">
-    <resultMap id="itemResult" type="Item">
-       <result property="userName" column="userName"></result>
-       <result property="passWord" column="userPassword"></result>
-       <result property="roles" column="userPassword"></result>
+    <resultMap id="itemResult" type="com.clockbone.domain.Item">
+       <result property="itemId" column="userId"></result>
+       <result property="key" column="userName"></result>
+       <result property="roles" column="roleName"></result>
     </resultMap>
 
     <select id="findAll" resultMap="itemResult">
@@ -14,7 +14,7 @@
 		userName,
 		(select r.name from role r where id in (SELECT ur.role_id FROM user_role ur
 		WHERE ur.user_id=userId)) roleName
-		from user where userName=#{userName}
+		from user
     </select>
 
 </mapper>

@@ -7,7 +7,7 @@ var shopCart = function(window){
     //全局变量
     // note new new Date("2020-12-23") 在ie下面报错，不支持这样的语法
     var items = [];
-    var cartName='HD_CART';
+    var cartName='TEST_CART';
     var expires = new Date( new Date().getTime()+86400000*7 );
     var debug = true,decimal = 2;
     var basic_domain = "gw2.kongzhong.com";

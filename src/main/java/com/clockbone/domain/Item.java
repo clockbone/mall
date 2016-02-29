@@ -6,9 +6,18 @@ public class Item {
 	
 
 	private String key;
-	
-	
-	public Integer getItemId() {
+
+    private String roles;
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public Integer getItemId() {
 		return itemId;
 	}
 

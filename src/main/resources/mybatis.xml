@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- MyBatis数据库连接配置 -->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="dataSourceOne" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 
         <!-- 基本属性 url、user、password -->
         <property name="url" value="#{app.jdbcUrl}" />
@@ -41,20 +41,22 @@
         <property name="poolPreparedStatements" value="false" />
 
     </bean>
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="mapperLocations" value="classpath:com/clockbone/mapper/*.xml" />
+
+    <bean id="sqlSessionFactoryOne" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceOne" />
+       <!-- <property name="mapperLocations" value="classpath:com/clockbone/mapper/*.xml" />-->
         <!-- xxxMapper.xml中返回值就可以直接写成实体名 -->
         <property name="typeAliasesPackage" value="com.clockbone.domain"/>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.clockbone.mapper" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryOne"/>
     </bean>
 
     <!-- 数据库事务@Transactional注解启用 -->
-    <tx:annotation-driven transaction-manager="txManager"/>
+   <!-- <tx:annotation-driven transaction-manager="txManager"/>
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
-    </bean>
+    </bean>-->
 
 </beans>
