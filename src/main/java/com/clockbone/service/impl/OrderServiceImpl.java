@@ -3,7 +3,6 @@ package com.clockbone.service.impl;
 import com.clockbone.domain.Item;
 import com.clockbone.domain.Order;
 import com.clockbone.domain.OrderItem;
-import com.clockbone.domain.User;
 import com.clockbone.mapper.ItemMapper;
 import com.clockbone.service.OrderService;
 import com.clockbone.vo.CartItem;
@@ -29,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
 
     private static final Object itemlock = new Object();
 
-    private static volatile HashMap<String, Item> itemList = null;
+    private static volatile HashMap<Integer, Item> itemList = null;
 
     @Override
     public Order createOrder(List<CartItem> items, String payType, Result result) {
@@ -54,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
         Iterator<CartItem> itemIterator = items.iterator();
         while(itemIterator.hasNext()){
             CartItem it = itemIterator.next();
-            String key = it.getKey();
+            Integer key = it.getKey();
             Integer count = it.getCount();
             if(key==null||count==null){
                 continue;
@@ -70,10 +69,15 @@ public class OrderServiceImpl implements OrderService {
             BeanUtils.copyProperties(item, orderItem);
             orderItem.setBuyCount(count);
             totalCount += orderItem.getBuyCount();
-            totalCoupon += orderItem.getCurrentCoupon() * count;
-            totalCurrency += orderItem.getCurrentCurrency() * count;
-            originalCoupon += orderItem.getCoupon() * count;
-            originalCurrency += orderItem.getCurrency() * count;
+            totalCoupon += 0 * count;
+            totalCurrency +=orderItem.getPrice() * count;
+            originalCoupon += orderItem.getPrice() * count;
+            originalCurrency +=orderItem.getPrice() * count;
+
+            //orderItem.setItemName("test ItemName");
+            //orderItem.setItemCategory(new ItemCategory());
+            //orderItem.getItemCategory().setName("test category name");
+
             list.add(orderItem);
         }
         Order order = new Order();
@@ -87,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
         return order;
 
     }
-    private Item getItem(String key,String userName){
+    private Item getItem(Integer key,String userName){
         Date dateCurrent = new Date();
 
         checkCacheItems(dateCurrent);
@@ -99,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
             synchronized (itemlock){
                 if(itemList == null){
                     List<Item> listItem  = itemMapper.findAll();
-                    HashMap<String, Item> ilist = new HashMap<String, Item>();
+                    HashMap<Integer, Item> ilist = new HashMap<Integer, Item>();
                     for(Item e:listItem){
                         if(null!=e){
                             ilist.put(e.getKey(),e);

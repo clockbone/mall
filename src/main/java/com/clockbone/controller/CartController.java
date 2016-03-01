@@ -27,7 +27,7 @@ import java.util.List;
 public class CartController {
 
     private static final String VIEW_CART="cart";
-    private static final String COOKIE_VALUE="HD_CART";
+    private static final String COOKIE_VALUE="TEST_CART";
 
     private static final String ITEM_SEPRARTOR=":";
     private static final String ITEM_COUNT_SEPRARTOR="_";
@@ -42,6 +42,8 @@ public class CartController {
                        Model model,HttpServletRequest request,HttpServletResponse response){
 
         myCarts = Strings.nullToEmpty(myCarts);
+
+        Cookie[] cookies = request.getCookies();
 
         //从cookies中获取购买的商品信息
         List<CartItem> items = getItemHashMap(myCarts);
@@ -67,7 +69,7 @@ public class CartController {
         StringBuilder sb = new StringBuilder();
         //构造 cookie信息
         for(OrderItem o:order.getItemsList()){
-            sb.append(o.getKey()).append(ITEM_COUNT_SEPRARTOR).append(o.getBuyCount());
+            sb.append(o.getKey()).append(ITEM_COUNT_SEPRARTOR).append(o.getBuyCount()).append(ITEM_SEPRARTOR);
         }
         //将构造的cookie写
         addToCookie(response, sb.toString());
@@ -75,11 +77,20 @@ public class CartController {
     }
 
     private static final String CART_COOKIE="TEST_CART";
-    private static final String COOKIES_DOMAIN=".test.com";
-    private static final String COOKIES_DOMAIN2=".test.com";
+    private static final String COOKIES_DOMAIN="test.clock.com";
+    private static final String COOKIES_DOMAIN2=".clock.com";
 
     private void addToCookie(HttpServletResponse response,String values){
 
+        //添加过滤后的 cookie信息
+        Cookie cookies = new Cookie(CART_COOKIE,values);
+        //设置路径，不设置默认是只在当前请求的url下有效，设置为/ ：表示在此工程下所有请求路经都在效
+        cookies.setPath("/");
+        //设置有效的cookie访问域名
+        cookies.setDomain(COOKIES_DOMAIN2);
+        response.addCookie(cookies);
+
+        //清除之前页面上添加的cookie信息
         Cookie cookieDel = new Cookie(CART_COOKIE, "");
         cookieDel.setPath("/");
         cookieDel.setDomain(COOKIES_DOMAIN);
@@ -88,12 +99,7 @@ public class CartController {
         response.addCookie(cookieDel);
 
 
-        Cookie cookies = new Cookie(CART_COOKIE,values);
-        //设置路径，不设置默认是只在当前请求的url下有效，设置为/ ：表示在此工程下所有请求路经都在效
-        cookies.setPath("/");
-        //设置有效的cookie访问域名
-        cookies.setDomain(COOKIES_DOMAIN2);
-        response.addCookie(cookies);
+
 
 
     }
@@ -104,9 +110,9 @@ public class CartController {
         for(String it:items){
             int colonIndex = it.indexOf(ITEM_COUNT_SEPRARTOR);
             if(colonIndex!=-1){
-                String key = it.substring(0,colonIndex);
+                Integer key = Integer.parseInt(it.substring(0, colonIndex));
                 String count = it.substring(colonIndex+1);
-                if(!Strings.isNullOrEmpty(key)&&!Strings.isNullOrEmpty(count)){
+                if(null!=key&&!Strings.isNullOrEmpty(count)){
                     CartItem cartItem = new CartItem(key,Integer.parseInt(count));
                     list.add(cartItem);
                 }

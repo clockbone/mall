@@ -4,16 +4,16 @@ package com.clockbone.vo;
  * Created by qinjun on 2016/2/24.
  */
 public class CartItem {
-    private String key;
+    private Integer key;
     private int count;
-    public CartItem(String key, int count) {
+    public CartItem(Integer key, int count) {
         this.key=key;
         this.count=count;
     }
-    public String getKey() {
+    public Integer getKey() {
         return key;
     }
-    public void setKey(String key) {
+    public void setKey(Integer key) {
         this.key = key;
     }
     public int getCount() {

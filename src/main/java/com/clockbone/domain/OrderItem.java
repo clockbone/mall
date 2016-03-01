@@ -4,6 +4,47 @@ package com.clockbone.domain;
  * Created by qinjun on 2016/2/24.
  */
 public class OrderItem extends  Item{
+    private Integer key;
+    private Integer count;
+
+    private String ItemName;
+
+    private String itemCategory;
+
+    public String getItemCategory() {
+        return itemCategory;
+    }
+
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
+    }
+
+    public String getItemName() {
+        return ItemName;
+    }
+
+    public void setItemName(String itemName) {
+        ItemName = itemName;
+    }
+
+    @Override
+    public Integer getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(Integer key) {
+        this.key = key;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
     private Integer totalCount ;
     private Integer totalCoupon ;
     private Integer totalCurrency ;
@@ -18,6 +59,18 @@ public class OrderItem extends  Item{
     private Integer coupon;
 
     private Integer currency;
+
+    private Integer price;
+
+    @Override
+    public Integer getPrice() {
+        return price;
+    }
+
+    @Override
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
 
     public Integer getCurrentCoupon() {
         return currentCoupon;

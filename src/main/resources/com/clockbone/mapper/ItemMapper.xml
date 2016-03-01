@@ -3,18 +3,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.clockbone.mapper.ItemMapper">
     <resultMap id="itemResult" type="com.clockbone.domain.Item">
-       <result property="itemId" column="userId"></result>
-       <result property="key" column="userName"></result>
-       <result property="roles" column="roleName"></result>
+       <result property="price" column="price"></result>
+       <result property="key" column="key_id"></result>
+       <result property="count" column="count"></result>
+       <result property="itemName" column="itemname"></result>
+        <result property="itemCategory" column="itemCategory"></result>
     </resultMap>
 
     <select id="findAll" resultMap="itemResult">
+        <![CDATA[
         select
-        userId,
-		userName,
-		(select r.name from role r where id in (SELECT ur.role_id FROM user_role ur
-		WHERE ur.user_id=userId)) roleName
-		from user
+        key_id,
+		count,
+		itemname,
+		itemCategory,
+		price from t_bone_item
+		]]>
+
     </select>
 
 </mapper>

@@ -10,7 +10,7 @@ var shopCart = function(window){
     var cartName='TEST_CART';
     var expires = new Date( new Date().getTime()+86400000*7 );
     var debug = true,decimal = 2;
-    var basic_domain = "gw2.kongzhong.com";
+    var basic_domain = "test.clock.com";
     var options = {
         'cartName' : cartName, //cookie的名字
         'expires' : expires, //cookie失效的时间
@@ -39,7 +39,7 @@ var shopCart = function(window){
         init: function(option){
             //判断用户是否禁用cookie
             if(!window.navigator.cookieEnabled ){
-                alert('您的浏览器不支持cookie无法使用购物车！,请设置允许设置cookie。');
+                alert('浏览器不支持cookie无法使用购物车！,请设置允许设置cookie。');
                 return false;
             }
             //从cookie中获取购物车中的数据
@@ -51,6 +51,7 @@ var shopCart = function(window){
             if(typeof cookie === 'undefined'){
                 //setCookie(options.cartName,'',{expires:options.expires,domain:options.domain});
                 setCookie(options.cartName,'',{domain:options.domain});
+                console.log(cookie)
             }else{
                 //每个item之间用&分开，item的属性之间用|分割
                 var cookie = getCookie(options.cartName);
@@ -63,7 +64,7 @@ var shopCart = function(window){
                             item.sku = cItem[0] || '';
                             item.quantity = cItem[1] || '';
                             items.push(item);
-                            //以下两行为了清除以前cookie域名为kongzhong.com和7天有效期
+                            //以下两行为了清除以前cookie域名为clock.com和7天有效期
                             _delCookie(options.cartName);
                             _saveCookie();//重新存一次
 
@@ -110,7 +111,8 @@ var shopCart = function(window){
             }
             _saveCookie();
             if(typeof(cartUrl)!='undefined'&&cartUrl!=""){
-                window.location=cartUrl;
+                //todo test
+                //window.location=cartUrl;
             }
             return true;
         },
@@ -191,7 +193,7 @@ var shopCart = function(window){
         var exp = new Date();
         exp.setTime(exp.getTime() - 1000);
         var cval=getCookie(name);
-        if(cval!=null) document.cookie= name + "="+cval+"; path=/;domain=kongzhong.com;expires="+exp.toGMTString();
+        if(cval!=null) document.cookie= name + "="+cval+"; path=/;domain=clock.com;expires="+exp.toGMTString();
     }
     /**
      * 设置cookie
@@ -219,6 +221,8 @@ var shopCart = function(window){
         //var str = name + "=" + value + ((expires) ? "; expires=" + expires.toGMTString() : "") + "; path=/;domain="+domain+"";
         var str = name + "=" + value + "; path=/;domain="+domain+"";
         document.cookie = str;
+        console.log(str)
+        console.log( document.cookie )
     };
 
     /**
@@ -249,6 +253,10 @@ var shopCart = function(window){
                 str += str_i+':'
             };
             //setCookie(options.cartName, str, {expires:options.expires,domain:options.domain});
+            console.log("cookie str=")
+            console.log(str)
+            console.log("options=")
+            console.log(options)
             setCookie(options.cartName, str, {domain:options.domain});
         }else{
             //setCookie(options.cartName, '', {expires:options.expires,domain:options.domain});
