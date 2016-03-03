@@ -45,7 +45,7 @@
                                         <a title="数量 + 1" class="count_plus" href="javascript:void(0)">数量 + 1</a>
                                     </td>
                                     <td><span class="t_renminbi">${var.price*var.buyCount}元</span><span class="t_coupon"></span></td>
-                                    <td><span class="delete_tr">删除</span></td>
+                                    <td><span class="delete_tr" style="cursor: pointer">删除</span></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

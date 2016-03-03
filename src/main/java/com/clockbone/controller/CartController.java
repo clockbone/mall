@@ -77,7 +77,7 @@ public class CartController {
     }
 
     private static final String CART_COOKIE="TEST_CART";
-    private static final String COOKIES_DOMAIN="test.clock.com";
+    private static final String COOKIES_DOMAIN=".test.clock.com";
     private static final String COOKIES_DOMAIN2=".clock.com";
 
     private void addToCookie(HttpServletResponse response,String values){
@@ -87,13 +87,13 @@ public class CartController {
         //设置路径，不设置默认是只在当前请求的url下有效，设置为/ ：表示在此工程下所有请求路经都在效
         cookies.setPath("/");
         //设置有效的cookie访问域名
-        cookies.setDomain(COOKIES_DOMAIN2);
+        cookies.setDomain(COOKIES_DOMAIN);
         response.addCookie(cookies);
 
         //清除之前页面上添加的cookie信息
         Cookie cookieDel = new Cookie(CART_COOKIE, "");
         cookieDel.setPath("/");
-        cookieDel.setDomain(COOKIES_DOMAIN);
+        cookieDel.setDomain(COOKIES_DOMAIN2);
         //设置成失效
         cookieDel.setMaxAge(0);
         response.addCookie(cookieDel);

@@ -51,7 +51,6 @@ var shopCart = function(window){
             if(typeof cookie === 'undefined'){
                 //setCookie(options.cartName,'',{expires:options.expires,domain:options.domain});
                 setCookie(options.cartName,'',{domain:options.domain});
-                console.log(cookie)
             }else{
                 //每个item之间用&分开，item的属性之间用|分割
                 var cookie = getCookie(options.cartName);
@@ -121,6 +120,8 @@ var shopCart = function(window){
             var index = this.getItemIndex(sku);
             if(index > -1){
                 items.splice(index,1);
+                console.log("123")
+                console.log(items)
                 _saveCookie();
             }else{
                 if(options.debug){
@@ -220,9 +221,10 @@ var shopCart = function(window){
          */
         //var str = name + "=" + value + ((expires) ? "; expires=" + expires.toGMTString() : "") + "; path=/;domain="+domain+"";
         var str = name + "=" + value + "; path=/;domain="+domain+"";
-        document.cookie = str;
+        console.log("224")
         console.log(str)
-        console.log( document.cookie )
+        document.cookie = str;
+        document.cookie = str;
     };
 
     /**
@@ -244,6 +246,8 @@ var shopCart = function(window){
     //***********************私有方法********************/
     function _saveCookie(){
         var i=0,l=items.length;
+        console.log("246")
+        console.log(items)
         if(l>0){
             var tItems = [];
             var str = "";
@@ -252,11 +256,9 @@ var shopCart = function(window){
                 var str_i = item.sku + '_' + item.quantity;
                 str += str_i+':'
             };
-            //setCookie(options.cartName, str, {expires:options.expires,domain:options.domain});
-            console.log("cookie str=")
+            console.log("256")
             console.log(str)
-            console.log("options=")
-            console.log(options)
+            //setCookie(options.cartName, str, {expires:options.expires,domain:options.domain});
             setCookie(options.cartName, str, {domain:options.domain});
         }else{
             //setCookie(options.cartName, '', {expires:options.expires,domain:options.domain});
