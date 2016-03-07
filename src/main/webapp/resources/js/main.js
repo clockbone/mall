@@ -2,9 +2,6 @@
 //加载完页面后，绑定事件，否则不生效。。。。。。
 var cartUrl="/cart"
 $(function(){
-    $("#divclick").click(function(){
-        alert("test")
-    })
     shopCart.init();
     $(".gem_list").delegate("li","click",function(){
         _addToCart_index($(this).find("a").attr("id"),1,true);}
