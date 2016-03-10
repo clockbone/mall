@@ -7,6 +7,7 @@ import com.clockbone.mapper.ItemMapper;
 import com.clockbone.service.OrderService;
 import com.clockbone.vo.CartItem;
 import com.clockbone.vo.Result;
+import com.clockpone.domain.Main;
 import com.clockpone.mapper.MainMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
         List<Item> list1 = itemMapper.findAll();
 
         //测试多个数据源是否有效
-        //User user = mainMapper.getUserByName("admin");
+        Main user = mainMapper.getUserByNameTest("admin");
 
         List<OrderItem> list = new ArrayList<OrderItem>(items.size());
         int totalCount=0;

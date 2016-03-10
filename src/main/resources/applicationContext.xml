@@ -23,7 +23,7 @@
     <util:properties id="app" location="classpath:/app.properties"/>
 	
 	<!-- 配置自动扫描方法 ，并每隔多长时间执行这个方法-->
-    <import resource="spring-security.xml"></import>
+   <!-- <import resource="spring-security.xml"></import>-->
     <import resource="mybatis-sec.xml"/>
     <import resource="mybatis.xml"/>
 

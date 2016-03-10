@@ -1,11 +1,11 @@
 package com.clockpone.mapper;
 
-import com.clockbone.domain.User;
+import com.clockpone.domain.Main;
 
 /**
  * Created by qinjun on 2016/2/18.
  */
 public interface MainMapper {
 
-    public User getUserByName(String name);
+    public Main getUserByNameTest(String name);
 }

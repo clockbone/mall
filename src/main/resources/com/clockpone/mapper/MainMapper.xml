@@ -8,7 +8,7 @@
        <result property="roles" column="roleName"></result>
     </resultMap>
 
-    <select id="getUserByName" resultMap="userResult" parameterType="java.lang.String">
+    <select id="getUserByNameTest" resultMap="userResult" parameterType="java.lang.String">
         select
         userId,
 		userName,

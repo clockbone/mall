@@ -37,7 +37,7 @@ public class CartController {
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value="/index",method = RequestMethod.GET)
     public String list(@CookieValue(value=COOKIE_VALUE,required = false)String myCarts,
                        Model model,HttpServletRequest request,HttpServletResponse response){
 
@@ -97,10 +97,6 @@ public class CartController {
         //设置成失效
         cookieDel.setMaxAge(0);
         response.addCookie(cookieDel);
-
-
-
-
 
     }
 
