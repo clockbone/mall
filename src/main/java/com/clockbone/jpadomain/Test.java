@@ -8,11 +8,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "t_test")
 @AttributeOverrides({
-        @AttributeOverride(name="key", column=@Column(name="mKey",unique=true))
+        @AttributeOverride(name="key", column=@Column(name="mkey",unique=true))
 })
 public class Test {
 
-    private Test(){
+    protected Test(){
 
     }
 
@@ -24,7 +24,7 @@ public class Test {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
-    @Column(length = 11,name="mKey")
+    @Column(length = 11,name="mkey")
     private String key;
 
     private String name;
@@ -52,5 +52,15 @@ public class Test {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Test{" +
+                "id=" + id +
+                ", key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

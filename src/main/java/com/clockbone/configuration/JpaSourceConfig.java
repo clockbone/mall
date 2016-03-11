@@ -1,15 +1,20 @@
 package com.clockbone.configuration;
 
-import com.clockbone.domain.Order;
 import com.clockbone.jpadao.ItemRepository;
+import com.clockbone.jpadao.MyBaseRepository;
+import com.clockbone.jpadao.UserRepository;
+import com.clockbone.jpadomain.Person;
 import com.clockbone.jpadomain.Test;
+import com.clockbone.jpadomain.UserTest;
 import com.clockbone.service.OrderService;
-import com.mysema.query.types.Predicate;
-import com.mysema.query.types.Visitor;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -20,7 +25,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -79,24 +83,59 @@ public class JpaSourceConfig {
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(JpaSourceConfig.class);
         //testTransactional(context);
 
+        //itemRepositoryTest(context);
+        //pagingAndSortingRepositoryTest(context);
+
+        itemRepositoryTest(context);
+        //userRep(context);
+        context.close();
+    }
+
+
+
+    public static void base(AbstractApplicationContext context){
+
+    }
+
+    public static void userRep(AbstractApplicationContext context){
+        UserRepository repository = context.getBean(UserRepository.class);
+
+        //repository.findAll();
+
+        List<UserTest> list = repository.getJackUser(1);
+        List<UserTest> list1 = repository.getJackUser(1);
+        List<UserTest> list2 = repository.getJackUser(1);
+
+        List<UserTest> test = repository.test("Bauer");
+        System.out.println(test);
+
+    }
+
+    public static void pagingAndSortingRepositoryTest(AbstractApplicationContext context){
+        PagingAndSortingRepository repository = context.getBean(PagingAndSortingRepository.class);
+        Page<Person> persons = repository.findAll(new PageRequest(0, 20 , Sort.Direction.DESC,"id"));
+
+    }
+    public static void itemRepositoryTest(AbstractApplicationContext context){
         ItemRepository repository = context.getBean(ItemRepository.class);
         //repository.save(entity);
 
         // save a couple of customers
-        repository.save(new Test("Jack", "Bauer"));
+       /* repository.save(new Test("Jack", "Bauer"));
         repository.save(new Test("Chloe", "O'Brian"));
         repository.save(new Test("Kim", "Bauer"));
         repository.save(new Test("David", "Palmer"));
         repository.save(new Test("Michelle", "Dessler"));
-        List<Test> list = repository.findAll();
+        List<Test> list = repository.findAll();*/
 
         List<Test> test1 = repository.findByKey("Jack");
         List<Test> test2 = repository.findByName("Jack");
-
         Boolean b = repository.exists(1);
 
+        List<Test> test = repository.findByFirstnameEndsWith("Bauer");
 
-        context.close();
+        System.out.println(test);
+
     }
 
     public static void testTransactional(AbstractApplicationContext context ){
