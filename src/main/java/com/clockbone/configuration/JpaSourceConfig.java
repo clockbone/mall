@@ -2,6 +2,7 @@ package com.clockbone.configuration;
 
 import com.clockbone.jpadao.ItemRepository;
 import com.clockbone.jpadao.MyBaseRepository;
+import com.clockbone.jpadao.PersonRepository;
 import com.clockbone.jpadao.UserRepository;
 import com.clockbone.jpadomain.Person;
 import com.clockbone.jpadomain.Test;
@@ -86,8 +87,9 @@ public class JpaSourceConfig {
         //itemRepositoryTest(context);
         //pagingAndSortingRepositoryTest(context);
 
-        itemRepositoryTest(context);
+        //itemRepositoryTest(context);
         //userRep(context);
+        persionRepTest(context);
         context.close();
     }
 
@@ -96,21 +98,41 @@ public class JpaSourceConfig {
     public static void base(AbstractApplicationContext context){
 
     }
+    //一个继承CrudRepository类的测试
+    public static void persionRepTest(AbstractApplicationContext context){
+        PersonRepository re = context.getBean(PersonRepository.class);
+        Person p = new Person();
+        p.setName("其它角色");
+        p.setDescription("biaoshu");
+        p.setRoleKey("juesheguanjian");
+        Person rePerson = re.save(p);
+        System.out.println(rePerson);
+
+    }
+
+
 
     public static void userRep(AbstractApplicationContext context){
         UserRepository repository = context.getBean(UserRepository.class);
 
+        //List<UserTest> lastnameorfirestname = repository.findByLastnameOrFirstname("jack", "O'Brian");
+
         //repository.findAll();
 
-        List<UserTest> list = repository.getJackUser(1);
-        List<UserTest> list1 = repository.getJackUser(1);
-        List<UserTest> list2 = repository.getJackUser(1);
+       /*
+       List<UserTest> list = repository.getJackUserTest(1);
+        List<UserTest> list1 = repository.getJackUserTest(1);
+        List<UserTest> list2 = repository.getJackUserTest(1);*/
 
         List<UserTest> test = repository.test("Bauer");
         System.out.println(test);
 
+        repository.update(1,"usertest");
+        //System.out.println(back);
+
     }
 
+    //分页的测试
     public static void pagingAndSortingRepositoryTest(AbstractApplicationContext context){
         PagingAndSortingRepository repository = context.getBean(PagingAndSortingRepository.class);
         Page<Person> persons = repository.findAll(new PageRequest(0, 20 , Sort.Direction.DESC,"id"));

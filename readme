@@ -17,7 +17,7 @@
 5、此项目中写入cookie的domain设置的test.clock.com,，所以需要在host文件中添加 127.0.0.1 test.clock.com的映射，
    访问test.clock.com:8080才可以看到cookie生效
 
-6、分支feature/feature-mall-hibernate 添加了 jpa 作为持久层
+6、分支feature/feature-mall-hibernate  添加了spring4零配置 jpa 作为持久层
    jpa注入方式 不是以xml配置文件方式注入的，是通过 configuration包下的 JpaSourceConfig类注入的
    一个简单的说明：
         spring4中提供了大量的注解来支持零配置，简要说明如下：
