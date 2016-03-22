@@ -1,5 +1,7 @@
 package com.clockbone.filter;
 
+import com.clockbone.constant.Constant;
+import com.clockbone.domain.User;
 import com.google.common.base.Strings;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +34,7 @@ public class LoginFilter implements Filter {
             System.out.println(key + value);
         }*/
 
-        sessionKey = filterConfig.getInitParameter("sessionKey");
+        sessionKey = filterConfig.getInitParameter("sessionKey");//LOGIN_NAME
         redirectURL = filterConfig.getInitParameter("redirectURL");
         String notCheckList = filterConfig.getInitParameter("notCheckURLList");
         if(!Strings.isNullOrEmpty(notCheckList)){
@@ -53,8 +55,33 @@ public class LoginFilter implements Filter {
 
         HttpSession session = request.getSession();
 
-        if(Strings.isNullOrEmpty(sessionKey)){
+        //获取请求的地址
+        String url = request.getServletPath() + (request.getPathInfo() == null ? "" : request.getPathInfo());
+
+        String uri=request.getRequestURI();
+
+        //如果是登录请求不拦截
+        if("/user/login".equals(url)||"/favicon.ico".equals(url)){
             filterChain.doFilter(request, response);
+            return;
+        }
+
+        //是否是图片css js
+        if(uri.endsWith(".js")
+                ||uri.endsWith(".css")
+                ||uri.endsWith(".jpg")
+                ){//是否是图片css js
+            filterChain.doFilter(request, response);
+            return;
+        }
+        //sessionKey=LOGIN_USER，存储的登录信息主键
+        if(Strings.isNullOrEmpty(sessionKey)){
+           throw  new NullPointerException("sessionKey is null!");
+        }
+        Object o = request.getSession().getAttribute(sessionKey);
+        if(null == o){
+            //用户登录信息为空，跳转到登录页
+            response.sendRedirect("/user/login");
             return;
         }
         if(checkRequestURIIntNotFilterList(request)){
@@ -65,13 +92,13 @@ public class LoginFilter implements Filter {
         //UserDetails userDetail = (UserDetails)SpringSecurityUtils.getCurrentUser();
         //request.get
 
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+    /*    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
 
         if(userDetails == null ){
 
-        }
+        }*/
 
         //找不到用户登录信息返回
         String userName = (String)request.getSession().getAttribute("userName");

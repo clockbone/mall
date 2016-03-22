@@ -38,8 +38,9 @@ import java.util.*;
 @Configuration()
 @ComponentScan("")
 @ImportResource(
-        {     "classpath:datasource-config.xml",
-                "classpath:applicationContext.xml"
+        {     "classpath:datasource-config.xml"/*,
+                "classpath:applicationContext.xml"*/ //运行jetty时，需要把这里加载的applicationContext.xml文注释，因为只能加载一个app.xml配置文件
+                                                     //运行这里的测试方法再打开注释
         })
 @EnableJpaRepositories("com.clockbone.jpadao")
 @EnableTransactionManagement

@@ -28,9 +28,9 @@
     </servlet-mapping>
 
     <!--开启 spring security会话-->
-    <listener>
+   <!-- <listener>
         <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
-    </listener>
+    </listener>-->
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -48,23 +48,23 @@
 
 
     <!--登录过滤器-->
-    <!--<filter>
+    <filter>
         <filter-name>loginFilter</filter-name>
         <filter-class>com.clockbone.filter.LoginFilter</filter-class>
 
-        &lt;!&ndash; sessionKey:需检查的在 Session 中保存的关键字 &ndash;&gt;
+        <!-- sessionKey:需检查的在 Session 中保存的关键字 -->
         <init-param>
             <param-name>sessionKey</param-name>
             <param-value>LOGIN_NAME</param-value>
         </init-param>
 
-        &lt;!&ndash; redirectURL:如果用户未登录，则重定向到指定的页面，URL不包括 ContextPath  &ndash;&gt;
+        <!-- redirectURL:如果用户未登录，则重定向到指定的页面，URL不包括 ContextPath  -->
         <init-param>
             <param-name>redirectURL</param-name>
             <param-value>/user/login</param-value>
         </init-param>
 
-        &lt;!&ndash; notCheckURLList:不做检查的URL列表，以分号分开，并且 URL 中不包括 ContextPath  &ndash;&gt;
+        <!-- notCheckURLList:不做检查的URL列表，以分号分开，并且 URL 中不包括 ContextPath  -->
         <init-param>
             <param-name>notCheckURLList</param-name>
             <param-value>/user/login</param-value>
@@ -74,11 +74,16 @@
     <filter-mapping>
         <filter-name>loginFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
+    </filter-mapping>
+
+    <!--设置超时时间，10代表10分钟-->
+    <session-config>
+        <session-timeout>50</session-timeout>
+    </session-config>
 
     <!-- Spring Security -->
 
-    <filter>
+   <!-- <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
@@ -86,7 +91,7 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
+-->
 
 
 
