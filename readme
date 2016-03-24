@@ -45,6 +45,7 @@
         @EnableWebMvcSecurity ： 启用springSecurity安全验证
 
 7、feature/feature-test-session测试session超时时间配置
+   在配置loginFilter登录过滤器时，还需要对.js,.css,jpg结尾的文件不能限制，否则 跳转到相应页面时 js和css，jpg都不加载。会出现js不执行的问题
 
 8、feature/feature-DynamicDataSource添加动态数据库连接
    a、为什么引进动态数据库配置？
