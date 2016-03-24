@@ -10,7 +10,7 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- MyBatis数据库连接配置 -->
+    <!-- MyBatis数据库连接配置  第一个数据源-->
     <bean id="dataSourceMyBatis" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 
         <!-- 基本属性 url、user、password -->
@@ -58,5 +58,101 @@
         <property name="basePackage" value="com.clockpone.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
+
+
+    <!--下面2个数据源为配置的动态数据源-->
+    <!-- MyBatis数据库连接配置  第二个数据源-->
+    <bean id="dataSourceMain" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="#{app.jdbcUrl}" />
+        <property name="username" value="#{app.jdbcUsername}" />
+        <property name="password" value="#{app.jdbcPassword}" />
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="1" />
+        <property name="minIdle" value="1" />
+        <property name="maxActive" value="20" />
+        <!--  <property name="maxActive" value="20" />-->
+
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+
+        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+
+        <property name="poolPreparedStatements" value="false" />
+
+    </bean>
+
+    <!-- MyBatis数据库连接配置  第三个数据源-->
+    <bean id="dataSourceBack" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="#{app.jdbcUrl}" />
+        <property name="username" value="#{app.jdbcUsername}" />
+        <property name="password" value="#{app.jdbcPassword}" />
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="1" />
+        <property name="minIdle" value="1" />
+        <property name="maxActive" value="20" />
+        <!--  <property name="maxActive" value="20" />-->
+
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+
+        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+
+        <property name="poolPreparedStatements" value="false" />
+
+    </bean>
+
+
+    <!--动态数据源配置-->
+    <bean id="dynamicDataSource" class="com.clockbone.filter.DynamicDataSource" >
+        <!-- 通过key-value的形式来关联数据源 -->
+        <property name="targetDataSources">
+            <map>
+                <entry value-ref="dataSourceMain" key="dataSourceMain"></entry>
+                <entry value-ref="dataSourceBack" key="dataSourceBack"></entry>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="dataSourceMain" />
+    </bean>
+
+    <bean id="sqlSessionFactoryDynamic" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dynamicDataSource" />
+        <property name="typeAliasesPackage" value="com.clockpone.domain" />
+    </bean>
+
+    <!-- scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.clockpone.dynamicdao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryDynamic"/>
+    </bean>
+
+
+
+
+
+
 
 </beans>

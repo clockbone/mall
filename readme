@@ -1,5 +1,20 @@
 1、启动mysql服务，以管理员身份运行cmd
-  键入：net start mysql
+   键入：net start mysql
+
+   打包
+      默认打包是filter下的local.properties配置文件，命令：mvn package
+      可根据不同环境打包不同的配置文件，如打包测试环境命令为：mvn package -Pdev
+      若还有测试类mvn插件,跳过测试类命令为：mvn clean package -Dmaven.test.skip=true -U -Pdev
+
+   自动生成mapper文件
+      如何用mybatis-generator-maven-plugin插件自动根据表名生成domain、dao、xml文件
+         新建generatorConfig.xml文件
+         风容参考：
+         http://www.mybatis.org/generator/quickstart.html
+         http://www.mybatis.org/generator/configreference/xmlconfig.html
+         可cd到工程目录下再执行,执行下列命令(这里还需要下载mybatis-generator-core jar包)：
+         java -jar E:\repository\org\mybatis\generator\mybatis-generator-core\1.3.2\mybatis-generator-core-1.3.2.jar -configfile src\main\resources\generatorConfig.xml -overwrite
+         可根据实际情况自定义文件路径
 
 2、 <authentication-manager>
           <!--权限控制类，权限校验通过 给用户添加相应权限-->
@@ -30,3 +45,21 @@
         @EnableWebMvcSecurity ： 启用springSecurity安全验证
 
 7、feature/feature-test-session测试session超时时间配置
+
+8、feature/feature-DynamicDataSource添加动态数据库连接
+   a、为什么引进动态数据库配置？
+      随着网站的业务不断扩展，数据不断增加，用户越来越多，数据库的压力也就越来越大，采用传统的方式，
+      比如：数据库或者SQL的优化基本已达不到要求，这个时候可以采用读写分离的策 略来改变现状。
+   b、通常做法
+      一个Master数据库，多个Slave数据库。Master库负责数据更新和实时数据查询，Slave库当然负责非实时数据查询。
+      把查询从主库中抽取出来，采用多个从库，使用负载均衡，减轻每个从库的查询压力。
+   c、开发中具体实现
+      第一种：定义2个数据源主库和从库，主库更新和时实查询，从库用于非实时查询
+      第二种：动态切换数据源，在程序运行时，把数据源动态织入到程序中从而选择读从库或主库，如：annotation，Spring AOP ，反射
+   参考：http://blog.csdn.net/rj042/article/details/21654627
+        http://uule.iteye.com/blog/2126533
+
+9、不知道是不是安装了虚拟机的原因，项目启动时成功了，但请求方法时报：java.lang.OutOfMemoryError: PermGen space
+   于是vm option中添加：-server -XX:PermSize=64M -XX:MaxPermSize=128m
+
+
