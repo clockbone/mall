@@ -64,3 +64,8 @@
    于是vm option中添加：-server -XX:PermSize=64M -XX:MaxPermSize=128m
 
 
+8、feature/feature-DynamicDataSource-two添加动态数据库连接,设置动态数据库类型的另一种方式
+
+9、当junit test类执行失败时，需要查看spring-test依懒和junit的版本号是否匹配
+
+

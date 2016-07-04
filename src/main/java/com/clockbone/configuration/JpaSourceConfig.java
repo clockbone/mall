@@ -49,12 +49,15 @@ public class JpaSourceConfig {
     @Autowired
     DataSource dataSource;
 
+    //@Bean负责注册bean对象
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean lef = new LocalContainerEntityManagerFactoryBean();
         lef.setDataSource(dataSource);
         lef.setJpaVendorAdapter(jpaVendorAdapter);
+        //设置扫描的jpa的model类为jpadomain包下的
         lef.setPackagesToScan("com.clockbone.jpadomain");
+        //配置orm，orm配置持久层是jpa
         lef.setMappingResources("orm.xml");
         Map<String, Object> jpaProperties = new HashMap<String, Object>();
         jpaProperties.put(Environment.HBM2DDL_AUTO, "none");
@@ -106,6 +109,7 @@ public class JpaSourceConfig {
         p.setName("其它角色");
         p.setDescription("biaoshu");
         p.setRoleKey("juesheguanjian");
+        //这里类似hibernate,Person类中会配置@Entity，自动生成sql语句
         Person rePerson = re.save(p);
         System.out.println(rePerson);
 
@@ -151,8 +155,10 @@ public class JpaSourceConfig {
         repository.save(new Test("Michelle", "Dessler"));
         List<Test> list = repository.findAll();*/
 
+        //测试自有方法
         List<Test> test1 = repository.findByKey("Jack");
         List<Test> test2 = repository.findByName("Jack");
+        //测试自定义sql语句方法
         Boolean b = repository.exists(1);
 
         List<Test> test = repository.findByFirstnameEndsWith("Bauer");

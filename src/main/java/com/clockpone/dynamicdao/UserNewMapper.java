@@ -48,6 +48,6 @@ public interface UserNewMapper {
 
 
 
-    @DataSource("dataSourceBack")
+    //@DataSource("dataSourceBack")
     List<UserNew> getAll();
 }

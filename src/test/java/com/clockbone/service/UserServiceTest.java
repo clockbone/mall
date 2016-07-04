@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class UserServiceTest extends BaseTest {
 
-   /* @Autowired
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -25,9 +25,9 @@ public class UserServiceTest extends BaseTest {
     }
 
     public void getAllTest(){
-       // List<UserNew> userList = userService.getAll();
-        List<UserNew> userList = userNewMapper.getAll();
+       List<UserNew> userList = userService.getAll();
+        //List<UserNew> userList = userNewMapper.getAll();
         System.out.println(userList);
-    }*/
+    }
 
 }
